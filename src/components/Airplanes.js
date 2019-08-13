@@ -31,7 +31,7 @@ class Airplanes extends Component {
       {this.state.airplanes.map(plane => (
         <div>
         <p key={plane.id}>
-          {plane.name} - {plane.rows} x {plane.columns}
+          <h4>Plane No:{plane.name} </h4>
         </p>
         <table className="airplane-seats">
 
