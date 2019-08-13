@@ -1,0 +1,17 @@
+.airplane-seats {
+  border: 0px solid black;
+}
+.airplane-seats td {
+  border: 2px solid blue;
+  width: 20px;
+  height: 15px;
+  background-color: lightblue;
+  margin: 2px;
+  border-left: 0px;
+
+}
+
+.airplane-seats td.noborder {
+  border: 0px;
+  background-color: white;
+}
