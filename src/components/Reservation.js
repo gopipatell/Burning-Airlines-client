@@ -10,38 +10,56 @@ class Reservation extends Component {
     super();
     this.state = {
       flight: {},
-      isLoaded: false
+      isLoaded: false,
+      seats: []
     }
+
+    this.handleSeatClicked = this.handleSeatClicked.bind(this);
   }
 
   componentDidMount() {
     const flightId = this.props.match.params.id;
     axios.get(RESERVATION_API + `${flightId}.json`)
-      .then(flight => {
-        console.log(flight.data);
-        this.setState({flight: flight.data, isLoaded: true});
+      .then(result => {
+        console.log(result.data);
+
+        const seats = Array(result.data.airplane.columns);
+        for(var row=0; row < seats.length; row++) {
+            seats[row] = Array(result.data.airplane.rows);
+        }
+
+        result.data.reservations.forEach(seat => {
+          seats[seat.columns-1][seat.rows-1] = seat.user;
+        });
+
+        this.setState({flight: result.data, isLoaded: true, seats: seats});
       });
 
   }
 
+  handleSeatClicked = function(col, row) {
+    console.log('clicked...', col, row);
+
+    const {flight, isLoaded, seats} = this.state;
+    const newSeats = seats.map(row => [...row]);
+
+    if(!seats[row][col]) {
+      newSeats[row][col] = 'X';
+      this.setState({
+        flight: flight,
+        isLoaded: isLoaded,
+        seats: newSeats
+      });
+    }
+  }
 
   render () {
 
-    const {isLoaded, flight} = this.state;
+    const {isLoaded, flight, seats} = this.state;
 
     if(!isLoaded) {
       return ('Loading..');
     } else {
-
-      const reservedSeats = flight.reservations.map(r => (r.rows-1) + '-' + (r.columns-1));
-
-      const reservedUsers = flight.reservations.reduce((o, v) => {
-        o[(v.rows-1) + '-' + (v.columns-1)] = v.user; return o;
-      }, {});
-
-
-      console.log(reservedSeats);
-      console.log(reservedUsers);
 
       return (
 
@@ -68,9 +86,9 @@ class Reservation extends Component {
               <tr key={'k2'+row}>
                 <td className="noborder">{ row + 1 }</td>
                 {[...Array(flight.airplane.rows).keys()].map(col => (
-                  <td className={(reservedSeats.indexOf(`${col}-${row}`) > -1 ? 'reserved' : '')} key={'k3'+col}>
+                  <td className={(seats[row][col] ? 'reserved' : 'available')} key={'k3'+col} onClick={() => this.handleSeatClicked(col, row)}>
 
-                    { reservedUsers[`${col}-${row}`] }
+                    {seats[row][col]}
 
                   </td>
                 ))}
@@ -78,8 +96,6 @@ class Reservation extends Component {
             ))}
             </tbody>
           </table>
-
-
         </div>
       )
     }

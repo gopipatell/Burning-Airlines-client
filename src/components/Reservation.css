@@ -4,6 +4,10 @@
   border-top: 0px;
   border-radius: 0px;
   background-color: lightblue;
+  min-width: 50px;
+  min-height: 30px;
+  display: inline-block;
+  text-align: center;
 }
 
 .Reservation .airplane-seats td.reserved {
