@@ -11,16 +11,25 @@ class Airplanes extends Component {
     this.state = {
       airplanes:[]
     };
+    this.savePlane = this.savePlane.bind( this );
   }
+  
 
   componentDidMount() {
     const fetchAirplanes = () => {
         axios.get(AIRPLANES_API)
           .then(results => {
-            this.setState({ airplanes: results.data });
+            console.log(results.data);
+            this.setState({airplanes: results.data });
           });
     }
     fetchAirplanes();
+  }
+
+  savePlane(name, rows, columns) {
+    axios.post(AIRPLANES_API, {name: name, rows: rows, columns: columns}).then((result) => {
+      this.setState({airplanes: [...this.state.airplanes, result.data]})
+    });
   }
 
   render() {
@@ -28,6 +37,8 @@ class Airplanes extends Component {
       <div>
 
       <h1> Airplane coming soon </h1>
+      <AirplaneForm onSubmit={this.savePlane}/>
+
       {this.state.airplanes.map(plane => (
         <div>
         <p key={plane.id}>
@@ -60,7 +71,55 @@ class Airplanes extends Component {
   }
 }
 
+class AirplaneForm extends Component {
+  constructor() {
+    super();
+    this.state = { 
+      name: '', 
+      rows: 0, 
+      columns: 0 
+    };
 
+    this._handleInputName = this._handleInputName.bind(this);
+    this._handleInputRows = this._handleInputRows.bind(this);
+    this._handleInputColumns = this._handleInputColumns.bind(this);
+    this._handleSubmit = this._handleSubmit.bind(this);
+  }
+  _handleInputName(e) {
+    this.setState({name: e.target.value})
+  }
+  _handleInputRows(e) {
+    this.setState({rows: e.target.value})
+  }
+  _handleInputColumns(e) {
+    this.setState({columns: e.target.value})
+  }
+  _handleSubmit(e) {
+    e.preventDefault();
+    this.props.onSubmit(this.state.name, this.state.rows, this.state.columns)
+    this.setState({name:'', rows: 0, columns: 0});
+  }
+  
+ 
+
+  render() {
+    return (
+        <form onSubmit={this._handleSubmit} >
+         <label>Name</label>
+         <input type="text" onInput={this._handleInputName} />
+         <br />
+         <label>Rows</label>
+         <input type="number" onInput={this._handleInputRows} />
+         <br />
+         <label>Columns</label>
+         <input type="number" onInput={this._handleInputColumns} />
+         <br />
+         <input type="submit" value= "Save Airplane" />
+         <br />
+       </form>
+    );
+  }
+}
 
 
 
