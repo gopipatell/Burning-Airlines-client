@@ -13,6 +13,8 @@ class Flights extends Component {
       flights: []
 
     };
+
+    this.saveFlight = this.saveFlight.bind(this);
   }
 
   componentDidMount() {
@@ -28,9 +30,9 @@ class Flights extends Component {
   }
 
 
-  saveFlight(name, origin, destination, date, available_seats) {
-    axios.post(FLIGHTS_API, {name: name, origin: origin, destination: destination,}).then((result) => {
-      this.setState({airplanes: [...this.state.airplanes, result.data]})
+  saveFlight(name, origin, destination, date, airplane_id) {
+    axios.post(FLIGHTS_API, {name: name, origin: origin, destination: destination, date: date, airplane_id: airplane_id}).then((result) => {
+      this.setState({flights: [...this.state.flights, result.data]})
     });
   }
 
@@ -38,7 +40,7 @@ class Flights extends Component {
     return (
       <div>
         <h1>Create Flight</h1>
-        <FlightForm data={this.state.flights}/>
+        <FlightForm onSubmit={this.saveFlight}/>
         <table className="flights">
           <thead>
             <tr>
@@ -58,7 +60,7 @@ class Flights extends Component {
                   <td key={flight.id + 4}>{flight.origin}</td>
                   <td key={flight.id + 5}>{flight.destination}</td>
                   <td key={flight.id + 6}>{flight.airplane.name}</td>
-                  <td key={flight.id + 7}>{flight.available_seats}</td>
+                  <td key={flight.id + 7}>{flight.airplane.rows*flight.airplane.columns}</td>
 
                 </tr>
               </tbody>
@@ -78,17 +80,24 @@ class FlightForm extends Component {
       origin: '',
       destination: '',
       date: '',
-      available_seats:0,
-
-
-
+      available_seats: 0,
+      airplane_id: 0,
+      airplanes: []
     };
 
     this._handleInputName = this._handleInputName.bind(this);
     this._handleInputOrigin = this._handleInputOrigin.bind(this);
     this._handleInputDestination = this._handleInputDestination.bind(this);
     this._handleInputDate = this._handleInputDate.bind( this );
+    this._handleChangeAirplane = this._handleChangeAirplane.bind( this );
     this._handleSubmit = this._handleSubmit.bind(this);
+
+    const fetchplanes = () => {
+      axios.get(AIRPLANES_API).then((results) => {
+        this.setState({airplanes: results.data});
+      });
+    };
+    fetchplanes();
   }
 
 
@@ -107,10 +116,12 @@ class FlightForm extends Component {
   _handleInputAvailableSeats(e) {
     this.setState({available_seats: e.target.value})
   }
+  _handleChangeAirplane(e) {
+    this.setState({airplane_id: e.target.value})
+  }
   _handleSubmit(e) {
     e.preventDefault();
-    this.props.onSubmit(this.state.name, this.state.rows, this.state.columns)
-    this.setState({name:'', rows: 0, columns: 0});
+    this.props.onSubmit(this.state.name, this.state.origin, this.state.destination, this.state.date, this.state.airplane_id);
   }
 
 
@@ -128,14 +139,11 @@ class FlightForm extends Component {
          <input type="text" onInput={this._handleInputDestination} />
          <br />
          <label>Date</label>
-         <input type="text" onInput={this._handleInputDate} />
-         <br />
-         <label>Available seats</label>
-         <input type="text" onInput={this._handleInputAvailableSeats} />
+         <input type="date" onInput={this._handleInputDate} />
          <br />
          <label>Airplane</label>
-         <select>
-         {this.props.data.map( (f) => <option>{f.airplane.name}</option>)}
+         <select onChange={this._handleChangeAirplane}>
+         {this.state.airplanes.map( (ap) => <option>{ap.id}</option>)}
          </select>
          <br/>
 
@@ -145,4 +153,5 @@ class FlightForm extends Component {
     );
   }
 }
+
  export default Flights;
