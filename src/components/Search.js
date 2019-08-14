@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const FLIGHTS_API = 'http://localhost:3000/flights.json';
 
@@ -139,7 +140,11 @@ class DisplayFlights extends Component{
           <tbody key={flight.id +1}>
             <tr key={flight.id}>
               <td key={flight.id + 2}>{flight.date}</td>
-              <td key={flight.id + 3}>{flight.name}</td>
+              <td key={flight.id + 3}>
+                <Link to={`flights/${flight.id}`}>
+                {flight.name}
+                </Link>
+              </td>
               <td key={flight.id + 4}>{flight.origin}</td>
               <td key={flight.id + 5}>{flight.destination}</td>
               <td key={flight.id + 6}>{flight.airplane.name}</td>

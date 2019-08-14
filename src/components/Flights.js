@@ -56,7 +56,9 @@ class Flights extends Component {
               <tbody key={flight.id +1}>
                 <tr key={flight.id}>
                   <td key={flight.id + 2}>{flight.date}</td>
-                  <td key={flight.id + 3}>{flight.name}</td>
+                  <td key={flight.id + 3}>
+                    {flight.name}
+                  </td>
                   <td key={flight.id + 4}>{flight.origin}</td>
                   <td key={flight.id + 5}>{flight.destination}</td>
                   <td key={flight.id + 6}>{flight.airplane.name}</td>
