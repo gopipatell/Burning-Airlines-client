@@ -8,3 +8,10 @@ table.displayFlight {
 #heading{
     text-align: center;
 }
+
+.blue {
+    background-color: grey;
+    padding: 5px;
+    padding-top: 20px;
+    border-radius: 10px;
+}

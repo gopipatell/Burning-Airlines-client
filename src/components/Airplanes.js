@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './Airplanes.css'
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import {Form, Container, Row, Col} from 'react-bootstrap'
+import {Form, Container, Row, Col, Nav, Navbar, NavDropdown} from 'react-bootstrap'
 
 const AIRPLANES_API = 'http://localhost:3000/airplanes.json';
 
@@ -36,6 +36,24 @@ class Airplanes extends Component {
 
   render() {
     return(
+      <div>
+      <Container fluid="true">
+      <Navbar bg="light" expand="lg">
+    <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand> 
+      <Nav className="mr-auto">
+            <Nav.Link><Link to="/search">Booking</Link> </Nav.Link> 
+            <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link> 
+            <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link>  
+                    
+          <NavDropdown title="Account" id="collasible-nav-dropdown">
+              <NavDropdown.Item><Link to="login">Sign in</Link></NavDropdown.Item>
+              <NavDropdown.Item><Link to="">Sign up</Link></NavDropdown.Item>
+              
+          </NavDropdown>
+      </Nav>
+      </Navbar>
+      </Container>
+
       <Container>
         
         
@@ -83,6 +101,7 @@ class Airplanes extends Component {
       
       
       </Container>
+      </div>
     )
   }
 }

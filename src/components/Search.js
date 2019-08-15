@@ -61,9 +61,10 @@ class Search extends Component {
         <Navbar bg="light" expand="lg">
       <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand> 
         <Nav className="mr-auto">
-              <Nav.Link><Link to="/search">Flights</Link> </Nav.Link> 
-              <Nav.Link><Link to="/airplanes/new">Create Airplanes</Link> </Nav.Link> 
-              <Nav.Link><Link to="/flights/new">Create Flights</Link> </Nav.Link>         
+              <Nav.Link><Link to="/search">Booking</Link> </Nav.Link> 
+              <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link> 
+              <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link>  
+               
             <NavDropdown title="Account" id="collasible-nav-dropdown">
                 <NavDropdown.Item><Link to="login">Sign in</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="">Sign up</Link></NavDropdown.Item>
@@ -72,12 +73,13 @@ class Search extends Component {
         </Nav>
         </Navbar>
         </Container>
+
         <Container>
-        <Row>
-        <span id="heading"><h2><strong>Find your flight!</strong>  </h2></span>
+        
+        <span><h2><strong>Find your flight!</strong>  </h2></span>
         <SearchForm onSubmit={this.searchFlight}/>
         <DisplayFlights info={this.state.flights}/>
-        </Row>
+        
     </Container>
     </div>
     
@@ -144,10 +146,11 @@ class SearchForm extends Component {
             </Form.Control>
           </Form.Group>
         </Form.Row>
-
+        <div class="blue">
         <Form.Group as={Col} controlId="formGridZip">
-            <Form.Control type="submit" value= "Search Flight" />
+            <Form.Control  type="submit" value= "Search Flight" />
         </Form.Group>
+        </div>
       </Form>
       
          
@@ -175,7 +178,11 @@ class DisplayFlights extends Component{
           <tbody key={flight.id +1}>
             <tr key={flight.id}>
               <td key={flight.id + 2}>{flight.date}</td>
-              <td key={flight.id + 3}>{flight.name}</td>
+              <td key={flight.id + 3}>
+                <Link to={`flights/${flight.id}`}>
+                {flight.name}
+                </Link>
+              </td>
               <td key={flight.id + 4}>{flight.origin}</td>
               <td key={flight.id + 5}>{flight.destination}</td>
               <td key={flight.id + 6}>{flight.airplane.name}</td>

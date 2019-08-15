@@ -13,9 +13,10 @@ function App() {
     <Navbar bg="light" expand="lg">
       <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand> 
         <Nav className="mr-auto">
-              <Nav.Link><Link to="/search">Flights</Link> </Nav.Link> 
-              <Nav.Link><Link to="/airplanes/new">Create Airplanes</Link> </Nav.Link> 
-              <Nav.Link><Link to="/flights/new">Create Flights</Link> </Nav.Link>         
+              <Nav.Link><Link to="/search">Booking</Link> </Nav.Link> 
+              <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link> 
+              <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link> 
+                    
             <NavDropdown title="Account" id="collasible-nav-dropdown">
                 <NavDropdown.Item><Link to="#">Sign in</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="#">Sign up</Link></NavDropdown.Item>

@@ -46,9 +46,10 @@ class Flights extends Component {
         <Navbar bg="light" expand="lg">
       <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand> 
         <Nav className="mr-auto">
-              <Nav.Link><Link to="/search">Flights</Link> </Nav.Link> 
-              <Nav.Link><Link to="/airplanes/new">Create Airplanes</Link> </Nav.Link> 
-              <Nav.Link><Link to="/flights/new">Create Flights</Link> </Nav.Link>         
+              <Nav.Link><Link to="/search">Booking</Link> </Nav.Link> 
+              <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link> 
+              <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link>  
+                     
             <NavDropdown title="Account" id="collasible-nav-dropdown">
                 <NavDropdown.Item><Link to="#">Sign in</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="#">Sign up</Link></NavDropdown.Item>
@@ -85,7 +86,9 @@ class Flights extends Component {
               <tbody key={flight.id +1}>
                 <tr key={flight.id}>
                   <td key={flight.id + 2}>{flight.date}</td>
-                  <td key={flight.id + 3}>{flight.name}</td>
+                  <td key={flight.id + 3}>
+                    {flight.name}
+                  </td>
                   <td key={flight.id + 4}>{flight.origin}</td>
                   <td key={flight.id + 5}>{flight.destination}</td>
                   <td key={flight.id + 6}>{flight.airplane.name}</td>
