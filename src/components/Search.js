@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import {Link} from 'react-router-dom';
-import { Container, Row, Col, Form, Table,Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import { Container, Row, Col, Form, Table,Nav, NavDropdown, Navbar, Jumbotron, Button } from 'react-bootstrap';
 import './Search.css'
+import User from './User';
+import NavMenu from './NavMenu';
 
 const FLIGHTS_API = 'http://localhost:3000/flights.json';
 
@@ -54,37 +56,115 @@ class Search extends Component {
 
 
   render(){
-    return(
-      
+
+    if(User.isAdmin()) {
+      return (
+        <div>
+        <Container fluid="true">
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
+            <Nav className="mr-auto">
+                  <Nav.Link><Link to="/search">Booking</Link> </Nav.Link>
+                  <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link>
+                  <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link>
+
+                <NavDropdown title="Account" id="collasible-nav-dropdown">
+                    <NavDropdown.Item><Link to="/logout">Sign out</Link></NavDropdown.Item>
+                </NavDropdown>
+            </Nav>
+        </Navbar>
+       </Container>
+       <Container>
+
+        <span><h2><strong>Find your flight!</strong>  </h2></span>
+        <SearchForm onSubmit={this.searchFlight}/>
+        <DisplayFlights info={this.state.flights}/>
+
+      </Container>
+      </div>
+      );
+      } else if (User.getEmail !== null) {
+        return (
+        <div>
+        <Container fluid="true">
+        <Navbar bg="light" expand="lg">
+          <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
+            <Nav className="mr-auto">
+                  <Nav.Link><Link to="/search">Booking</Link> </Nav.Link>
+
+                <NavDropdown title="Account" id="collasible-nav-dropdown">
+                    <NavDropdown.Item><Link to="/logout">Sign out</Link></NavDropdown.Item>
+                </NavDropdown>
+            </Nav>
+        </Navbar>
+
+        </Container>
+        <Container>
+
+         <span><h2><strong>Find your flight!</strong>  </h2></span>
+         <SearchForm onSubmit={this.searchFlight}/>
+         <DisplayFlights info={this.state.flights}/>
+
+       </Container>
+        </div>
+      );
+      } else {
+        return (
+          <div>
+         <Container fluid="true">
+         <Navbar bg="light" expand="lg">
+           <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
+             <Nav className="mr-auto">
+
+                 <NavDropdown title="Account" id="collasible-nav-dropdown">
+                     <NavDropdown.Item><Link to="/login">Sign in</Link></NavDropdown.Item>
+                 </NavDropdown>
+             </Nav>
+         </Navbar>
+         </Container>
+         <Container>
+
+          <span><h2><strong>Find your flight!</strong>  </h2></span>
+          <SearchForm onSubmit={this.searchFlight}/>
+          <DisplayFlights info={this.state.flights}/>
+
+        </Container>
+         </div>
+       );
+      }
+
+      /*
+      return (
       <div>
         <Container fluid="true">
         <Navbar bg="light" expand="lg">
-      <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand> 
+      <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
         <Nav className="mr-auto">
-              <Nav.Link><Link to="/search">Booking</Link> </Nav.Link> 
-              <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link> 
-              <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link>  
-               
+              <Nav.Link><Link to="/search">Booking</Link> </Nav.Link>
+              <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link>
+              <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link>
+
             <NavDropdown title="Account" id="collasible-nav-dropdown">
                 <NavDropdown.Item><Link to="login">Sign in</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="">Sign up</Link></NavDropdown.Item>
-                
+
             </NavDropdown>
         </Nav>
         </Navbar>
         </Container>
 
         <Container>
-        
+
         <span><h2><strong>Find your flight!</strong>  </h2></span>
         <SearchForm onSubmit={this.searchFlight}/>
         <DisplayFlights info={this.state.flights}/>
-        
+
     </Container>
     </div>
-    
-    )
-  }
+
+  )
+}*/
+}
 }
 
 
@@ -152,10 +232,10 @@ class SearchForm extends Component {
         </Form.Group>
         </div>
       </Form>
-      
-         
-         
-      
+
+
+
+
     );
   }
 }

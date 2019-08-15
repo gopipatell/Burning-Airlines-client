@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import User from './User';
+import { Form, Container, Row } from 'react-bootstrap';
+import './Login.css';
 
 const USERS_API = 'http://localhost:3000/users.json';
 
@@ -60,17 +62,29 @@ class LogIn extends Component {
 
   render() {
     return (
+      <Container>
+      <Row className="justify-content-md-center">
+      < div class="login">
       <div>
-      <h1>Log in Page</h1>
-        <form onSubmit={this._handleSubmit} >
-         <label>Name: </label>
-         <input type="text" onInput={this._handleInputName} />
-         <label> email: </label>
-         <input type="text" onInput={this._handleInputEmail} />
-         <input type="submit" value= "Log In" />
-         <br />
-       </form>
+      <h1>Log in</h1>
+        <Form onSubmit={this._handleSubmit} >
+        <Form.Group controlId="formGroupEmail">
+            <Form.Label>Name</Form.Label>
+            <Form.Control type="text" placeholder="Ludo" onInput={this._handleInputName}/>
+        </Form.Group>
+
+        <Form.Group controlId="formGroupEmail">
+            <Form.Label>Email</Form.Label>
+            <Form.Control type="email" placeholder="ludo@ga.co" onInput={this._handleInputEmail}/>
+        </Form.Group>
+
+         <Form.Control type="submit" value= "Log In" />
+
+       </Form>
      </div>
+     </div>
+     </Row>
+     </Container>
     );
   }
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import './Flights.css'
 import {Link} from 'react-router-dom';
 import {Form, Container, Row, Col, Table, Nav, Navbar, NavDropdown} from 'react-bootstrap'
-
+import NavMenu from './NavMenu';
 
 const AIRPLANES_API = 'http://localhost:3000/airplanes.json';
 const FLIGHTS_API = 'http://localhost:3000/flights.json';
@@ -44,12 +44,12 @@ class Flights extends Component {
       <div>
         <Container fluid="true">
         <Navbar bg="light" expand="lg">
-      <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand> 
+      <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand>
         <Nav className="mr-auto">
-              <Nav.Link><Link to="/search">Booking</Link> </Nav.Link> 
-              <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link> 
-              <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link>  
-                     
+              <Nav.Link><Link to="/search">Booking</Link> </Nav.Link>
+              <Nav.Link><Link to="/airplanes">Create Airplanes</Link> </Nav.Link>
+              <Nav.Link><Link to="/flights">Create Flights</Link> </Nav.Link>
+
             <NavDropdown title="Account" id="collasible-nav-dropdown">
                 <NavDropdown.Item><Link to="#">Sign in</Link></NavDropdown.Item>
                 <NavDropdown.Item><Link to="#">Sign up</Link></NavDropdown.Item>
@@ -60,9 +60,9 @@ class Flights extends Component {
       </Container>
 
       <Container>
-      
+
         <Row>
-      
+
         <Col className="form">
         <h1>Create Flight</h1>
         <FlightForm onSubmit={this.saveFlight}/>
@@ -104,7 +104,7 @@ class Flights extends Component {
       </Container>
       </div>
     )
-    
+
   }
 
 }
@@ -165,14 +165,14 @@ class FlightForm extends Component {
   render() {
 
     return (
-      
-        
+
+
         <Form onSubmit={this._handleSubmit} >
           <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Name</Form.Label>
                 <Form.Control type="text" placeholder="GA33" onInput={this._handleInputName}/>
           </Form.Group>
-         
+
           <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Origin</Form.Label>
                 <Form.Control type="text" placeholder="SYD" onInput={this._handleInputOrigin}/>
@@ -182,24 +182,24 @@ class FlightForm extends Component {
               <Form.Label>Destination</Form.Label>
                 <Form.Control type="text" placeholder="SYD" onInput={this._handleInputDestination}/>
           </Form.Group>
-         
+
           <Form.Group controlId="exampleForm.ControlInput1">
               <Form.Label>Date</Form.Label>
                 <Form.Control type="date" placeholder="SYD" onInput={this._handleInputDate}/>
           </Form.Group>
-         
+
           <Form.Group controlId="exampleForm.ControlSelect1">
             <Form.Label>Airplane</Form.Label>
               <Form.Control as="select" onChange={this._handleChangeAirplane}>
                   {this.state.airplanes.map( (ap) => <option>{ap.id}</option>)}
               </Form.Control>
           </Form.Group>
-         
+
           <Form.Control type="submit" value="Save flight"></Form.Control>
-         
+
 
        </Form>
-      
+
     );
   }
 }
