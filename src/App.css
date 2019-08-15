@@ -18,6 +18,10 @@ a {
     color:  rgb(102, 0, 0);
 }
 
-html {
-  background-color: 'pink';
+h1 strong{
+    font-size: 3em;
+}
+
+p strong{
+    font-size: 2em;
 }

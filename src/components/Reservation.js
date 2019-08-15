@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import './Reservation.css'
+import { Container, Table } from 'react-bootstrap';
 
 const RESERVATION_API = 'http://localhost:3000/flights/';
 
@@ -62,18 +63,42 @@ class Reservation extends Component {
     } else {
 
       return (
+        <Container>
 
         <div className="Reservation">
           <h2> Reservation </h2>
 
-          <p>
-            {flight.date} - {flight.name} - {flight.origin} > {flight.destination}
-          </p>
-          <p>
-            Airplane {flight.airplane.name} - Available seats {flight.available_seats}
-          </p>
+          <Table striped bordered hover className="flights">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Flight</th>
+              <th>From</th>
+              <th>To</th>
+              <th>Plane</th>
+              <th>Available seats</th>
+             </tr>
+          </thead>
+              <tbody key={flight.id +1}>
+                <tr key={flight.id}>
+                  <td key={flight.id + 2}>{flight.date}</td>
+                  <td key={flight.id + 3}>
+                    {flight.name}
+                  </td>
+                  <td key={flight.id + 4}>{flight.origin}</td>
+                  <td key={flight.id + 5}>{flight.destination}</td>
+                  <td key={flight.id + 6}>{flight.airplane.name}</td>
+                  <td key={flight.id + 7}>{flight.available_seats}</td>
+
+                </tr>
+              </tbody>
+        </Table>
+          <div className="seat-booking">
+
+          <h4>Select your seats</h4>
 
           <table className="airplane-seats">
+            
             <tbody>
             <tr>
               <td className="noborder"></td>
@@ -96,7 +121,9 @@ class Reservation extends Component {
             ))}
             </tbody>
           </table>
+          </div>
         </div>
+        </Container>
       )
     }
   }
