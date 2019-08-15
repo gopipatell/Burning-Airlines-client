@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 import './Flights.css'
+import {Link} from 'react-router-dom';
+import {Form, Container, Row, Col, Table, Nav, Navbar, NavDropdown} from 'react-bootstrap'
 
 
 const AIRPLANES_API = 'http://localhost:3000/airplanes.json';
@@ -38,10 +40,37 @@ class Flights extends Component {
 
   render() {
     return (
+      
       <div>
+        <Container fluid="true">
+        <Navbar bg="light" expand="lg">
+      <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand> 
+        <Nav className="mr-auto">
+              <Nav.Link><Link to="/search">Flights</Link> </Nav.Link> 
+              <Nav.Link><Link to="/airplanes/new">Create Airplanes</Link> </Nav.Link> 
+              <Nav.Link><Link to="/flights/new">Create Flights</Link> </Nav.Link>         
+            <NavDropdown title="Account" id="collasible-nav-dropdown">
+                <NavDropdown.Item><Link to="#">Sign in</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="#">Sign up</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="#">Sign out</Link></NavDropdown.Item>
+            </NavDropdown>
+        </Nav>
+    </Navbar>
+      </Container>
+
+      <Container>
+      
+        <Row>
+      
+        <Col className="form">
         <h1>Create Flight</h1>
         <FlightForm onSubmit={this.saveFlight}/>
-        <table className="flights">
+        </Col>
+
+        <Col className="display">
+
+        <h1>All flights</h1>
+        <Table striped bordered hover className="flights">
           <thead>
             <tr>
               <th>Date</th>
@@ -66,10 +95,15 @@ class Flights extends Component {
               </tbody>
 
          ))}
-        </table>
+        </Table>
+        </Col>
+      </Row>
+      </Container>
       </div>
     )
+    
   }
+
 }
 
 class FlightForm extends Component {
@@ -128,28 +162,41 @@ class FlightForm extends Component {
   render() {
 
     return (
-        <form onSubmit={this._handleSubmit} >
-         <label>Name</label>
-         <input type="text" onInput={this._handleInputName} />
-         <br />
-         <label>Origin</label>
-         <input type="text" onInput={this._handleInputOrigin} />
-         <br />
-         <label>Destination</label>
-         <input type="text" onInput={this._handleInputDestination} />
-         <br />
-         <label>Date</label>
-         <input type="date" onInput={this._handleInputDate} />
-         <br />
-         <label>Airplane</label>
-         <select onChange={this._handleChangeAirplane}>
-         {this.state.airplanes.map( (ap) => <option>{ap.id}</option>)}
-         </select>
-         <br/>
+      
+        
+        <Form onSubmit={this._handleSubmit} >
+          <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Name</Form.Label>
+                <Form.Control type="text" placeholder="GA33" onInput={this._handleInputName}/>
+          </Form.Group>
+         
+          <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Origin</Form.Label>
+                <Form.Control type="text" placeholder="SYD" onInput={this._handleInputOrigin}/>
+          </Form.Group>
 
-         <input type="submit" value= "Save Flight" />
-         <br />
-       </form>
+          <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Destination</Form.Label>
+                <Form.Control type="text" placeholder="SYD" onInput={this._handleInputDestination}/>
+          </Form.Group>
+         
+          <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Date</Form.Label>
+                <Form.Control type="date" placeholder="SYD" onInput={this._handleInputDate}/>
+          </Form.Group>
+         
+          <Form.Group controlId="exampleForm.ControlSelect1">
+            <Form.Label>Airplane</Form.Label>
+              <Form.Control as="select" onChange={this._handleChangeAirplane}>
+                  {this.state.airplanes.map( (ap) => <option>{ap.id}</option>)}
+              </Form.Control>
+          </Form.Group>
+         
+          <Form.Control type="submit" value="Save flight"></Form.Control>
+         
+
+       </Form>
+      
     );
   }
 }

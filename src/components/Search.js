@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+import { Container, Row, Col, Form, Table,Nav, NavDropdown, Navbar } from 'react-bootstrap';
+import './Search.css'
 
 const FLIGHTS_API = 'http://localhost:3000/flights.json';
 
@@ -52,11 +55,32 @@ class Search extends Component {
 
   render(){
     return(
+      
       <div>
-        <h2> Search Flight </h2>
+        <Container fluid="true">
+        <Navbar bg="light" expand="lg">
+      <Navbar.Brand><Link to="/">Home</Link></Navbar.Brand> 
+        <Nav className="mr-auto">
+              <Nav.Link><Link to="/search">Flights</Link> </Nav.Link> 
+              <Nav.Link><Link to="/airplanes/new">Create Airplanes</Link> </Nav.Link> 
+              <Nav.Link><Link to="/flights/new">Create Flights</Link> </Nav.Link>         
+            <NavDropdown title="Account" id="collasible-nav-dropdown">
+                <NavDropdown.Item><Link to="login">Sign in</Link></NavDropdown.Item>
+                <NavDropdown.Item><Link to="">Sign up</Link></NavDropdown.Item>
+                
+            </NavDropdown>
+        </Nav>
+        </Navbar>
+        </Container>
+        <Container>
+        <Row>
+        <span id="heading"><h2><strong>Find your flight!</strong>  </h2></span>
         <SearchForm onSubmit={this.searchFlight}/>
         <DisplayFlights info={this.state.flights}/>
+        </Row>
+    </Container>
     </div>
+    
     )
   }
 }
@@ -104,19 +128,31 @@ class SearchForm extends Component {
   render() {
 
     return (
-        <form onSubmit={this._handleSubmit} >
-        <label>From</label>
-        <select onChange={this._handleChangeOrigin}>
-        {this.state.flights.map( (f) => <option>{f.origin}</option>)}
-        </select>
-        <label>To</label>
-         <select onChange={this._handleChangeDestination}>
-         {this.state.flights.map( (f) => <option>{f.destination}</option>)}
-         </select>
+      <Form onSubmit={this._handleSubmit}>
+        <Form.Row>
+        <Form.Group as={Col} controlId="formGridCity">
+            <Form.Label>From</Form.Label>
+            <Form.Control as="select" onChange={this._handleChangeOrigin}>
+              {this.state.flights.map( (f) => <option>{f.origin}</option>)}
+            </Form.Control>
+          </Form.Group>
 
-         <input type="submit" value= "Search Flight" />
-         <br />
-       </form>
+          <Form.Group as={Col} controlId="formGridState">
+            <Form.Label>To</Form.Label>
+            <Form.Control as="select" onChange={this._handleChangeDestination}>
+              {this.state.flights.map( (f) => <option>{f.destination}</option>)}
+            </Form.Control>
+          </Form.Group>
+        </Form.Row>
+
+        <Form.Group as={Col} controlId="formGridZip">
+            <Form.Control type="submit" value= "Search Flight" />
+        </Form.Group>
+      </Form>
+      
+         
+         
+      
     );
   }
 }
@@ -125,7 +161,7 @@ class DisplayFlights extends Component{
 
   render(){
     return (
-    <table>
+    <Table striped bordered hover className="displayFlight">
       <thead>
         <tr>
           <th>Date</th>
@@ -147,7 +183,7 @@ class DisplayFlights extends Component{
           </tbody>
 
      ))}
-    </table>)
+    </Table>)
   }
 
 }

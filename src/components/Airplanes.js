@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import './Airplanes.css'
 import axios from 'axios';
+import {Link} from 'react-router-dom';
+import {Form, Container, Row, Col} from 'react-bootstrap'
 
 const AIRPLANES_API = 'http://localhost:3000/airplanes.json';
 
@@ -34,13 +36,18 @@ class Airplanes extends Component {
 
   render() {
     return(
-      <div>
-
-      <h1> Airplane coming soon </h1>
-      <AirplaneForm onSubmit={this.savePlane}/>
-
+      <Container>
+        
+        
+        <div>
+        
+       
+            <h1> New Airplane </h1>
+              <AirplaneForm onSubmit={this.savePlane}/>
+        
       {this.state.airplanes.map(plane => (
         <div>
+          
         <p key={plane.id}>
           <h4>Plane No:{plane.name} </h4>
         </p>
@@ -64,9 +71,18 @@ class Airplanes extends Component {
 
 
         </table>
-        </div>
+        
+        
+              </div>
+               
+              
       ))}
+     
+      
       </div>
+      
+      
+      </Container>
     )
   }
 }
@@ -104,19 +120,29 @@ class AirplaneForm extends Component {
 
   render() {
     return (
-        <form onSubmit={this._handleSubmit} >
-         <label>Name</label>
-         <input type="text" onInput={this._handleInputName} />
-         <br />
-         <label>Rows</label>
-         <input type="number" onInput={this._handleInputRows} />
-         <br />
-         <label>Columns</label>
-         <input type="number" onInput={this._handleInputColumns} />
-         <br />
-         <input type="submit" value= "Save Airplane" />
-         <br />
-       </form>
+      <Form onSubmit={this._handleSubmit} >
+          <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Name</Form.Label>
+                <Form.Control type="text" onInput={this._handleInputName}/>
+          </Form.Group>
+         
+          <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Rows</Form.Label>
+                <Form.Control type="number" onInput={this._handleInputRows}/>
+          </Form.Group>
+
+          <Form.Group controlId="exampleForm.ControlInput1">
+              <Form.Label>Columns</Form.Label>
+                <Form.Control type="number" onInput={this._handleInputColumns}/>
+          </Form.Group>
+         
+         
+          <Form.Control type="submit" value="Save Airplane"></Form.Control>
+         
+
+       </Form>
+        
+         
     );
   }
 }
